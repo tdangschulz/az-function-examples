@@ -1,0 +1,9 @@
+{
+  "azureFunctions.javaBuildTool": "maven",
+  "azureFunctions.deploySubpath": "target/azure-functions/functions.mail-1706978587830",
+  "azureFunctions.projectLanguage": "Java",
+  "azureFunctions.projectRuntime": "~4",
+  "debug.internalConsoleOptions": "neverOpen",
+  "azureFunctions.preDeployTask": "package (functions)",
+  "java.configuration.updateBuildConfiguration": "automatic"
+}
