@@ -21,6 +21,8 @@ app.http("httpTrigger1", {
 
     const body = await request.json();
     context.log(body);
+
+    // https://learn.microsoft.com/de-de/rest/api/storageservices/designing-a-scalable-partitioning-strategy-for-azure-table-storage
     const item = {
       ...body,
       partitionKey: "persons",
