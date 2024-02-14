@@ -11,7 +11,7 @@ const tableOutput = output.table({
   connection: "MyStorageConnectionAppSetting",
 });
 
-app.http("httpTrigger1", {
+app.http("httpPostTrigger", {
   methods: ["POST"],
   authLevel: "function", // x-functions-key in header oder ?code={KEY}
   extraOutputs: [tableOutput],
@@ -46,5 +46,34 @@ app.http("httpTrigger1", {
     }
 
     return { headers: [], status: 201, body: JSON.stringify(item) };
+  },
+});
+
+app.http("httpGetTrigger", {
+  methods: ["GET"],
+  authLevel: "function", // x-functions-key in header oder ?code={KEY}
+  extraOutputs: [tableOutput],
+  route: "persons/{uuid}",
+  handler: async (request, context) => {
+    context.log(`Http function processed request for url "${request.url}"`);
+
+    if (request.params.uuid) {
+      let connectionString = process.env.MyStorageConnectionAppSetting;
+
+      const tableClient = TableClient.fromConnectionString(
+        connectionString,
+        "Persons"
+      );
+
+      const entity = await tableClient.getEntity(
+        "persons",
+        request.params.uuid
+      );
+
+      /**
+       * what is the etag in the response? https://microsoft.github.io/AzureTipsAndTricks/blog/tip88.html
+       */
+      return { headers: [], status: 201, body: JSON.stringify(entity) };
+    }
   },
 });

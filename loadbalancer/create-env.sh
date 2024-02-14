@@ -1,11 +1,14 @@
 # adapt the following setting
-resource_group=rg-load-balancer-introduction-tuan
-region=westeurope
+resource_group=rg-lb-introduction-tuan
+region=germanywestcentral
 username=adminuser
 password='SecretPassword123!@#'
-vnet_name=vnet-loadbalancer-westeu-tuan
-subnet_name=subnet-loadbalancer-westeu-tuan
-availability_set_name=as-loadbalancer-westeu-tuan
+vnet_name=vnet-lb-weu-tuan
+vm_name=vm-lb-we-tds # max 14 digits
+subnet_name=subnet-lb-westeu-tuan
+availability_set_name=as-lb-westeu-tuan
+network_security_group=nsg-vm-lb-westeu-tuan
+email=foo@bar.com
 
 az group create -g $resource_group -l $region
 
@@ -25,7 +28,7 @@ az vm availability-set create \
 for NUM in 1 2 3
 do
   az vm create \
-    -n vm-eu-0$NUM \
+    -n $vm_name-0$NUM \
     -g $resource_group \
     -l $region \
     --size Standard_B2s \
@@ -36,23 +39,32 @@ do
     --subnet $subnet_name \
     --public-ip-address "" \
     --availability-set $availability_set_name \
-	  --nsg vm-nsg
+	  --nsg $network_security_group
 done
 
 for NUM in 1 2 3
 do
-  az vm open-port -g $resource_group --name vm-eu-0$NUM --port 80
+  az vm open-port -g $resource_group --name $vm_name-0$NUM --port 80
 done
 
 for NUM in 1 2 3
 do
   az vm extension set \
     --name CustomScriptExtension \
-    --vm-name vm-loadbalancer-eu-0$NUM \
+    --vm-name $vm_name-0$NUM \
     -g $resource_group \
     --publisher Microsoft.Compute \
     --version 1.8 \
     --settings '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; powershell Add-Content -Path \"C:\\inetpub\\wwwroot\\Default.htm\" -Value $($env:computername)"}'
+done
+
+for NUM in 1 2 3
+do
+    az vm auto-shutdown \
+    --resource-group $resource_group \
+    --name $vm_name-0$NUM \
+    --time 1830 \
+    --email $email
 done
 
 
