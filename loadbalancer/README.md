@@ -1,4 +1,9 @@
+## Target picture
+
+![alt text](loadbalancer-target-pic.jpg "Title")
+
 ## how to
+
 - start the azure cloud shell
 - execute `touch create-env.sh` in the shell
 - execute `nano create-env.sh` in the shell
