@@ -1,16 +1,19 @@
 # adapt the following setting
-resource_group=rg-lb-introduction-tuan
+resource_group=rg-lb-introduction-tds
 region=germanywestcentral
 username=adminuser
 password='SecretPassword123!@#'
-vnet_name=vnet-lb-weu-tuan
-vm_name=vm-lb-we-tds # max 14 digits
-subnet_name=subnet-lb-westeu-tuan
-availability_set_name=as-lb-westeu-tuan
-network_security_group=nsg-vm-lb-westeu-tuan
 email=foo@bar.com
+vnet_name=vnet-lb-weu-tds
+vm_name=vm-lb-we-tds # max 14 digits
+subnet_name=subnet-lb-westeu-tds
+availability_set_name=as-lb-westeu-tds
+network_security_group=nsg-vm-lb-westeu-tds
+public_ip_name=pip-lb-tds
 
 az group create -g $resource_group -l $region
+
+az network public-ip create --name $public_ip_name --resource-group $resource_group
 
 az network vnet create \
   -n $vnet_name \
