@@ -1,6 +1,6 @@
 ## Target picture
 
-![alt text](loadbalancer-target-pic.jpg "Title")
+![alt text](images/loadbalancer-target-pic.jpg "Title")
 
 ## Create the backends via script (Iac)
 
@@ -20,21 +20,28 @@
 
 - go to the marketplace and search for **Load Balancer**
 
-<img src="loadbalancer-general.png" alt="image" style="width:800px;height:auto;">
+<img src="./images/loadbalancer-general.png" alt="image" style="width:800px;height:auto;">
 
-<img src="public-ip.png" alt="image" style="width:800px;height:auto;">
+<img src="images/public-ip.png" alt="image" style="width:800px;height:auto;">
 
-<img src="backendpool.png" alt="image" style="width:800px;height:auto;">
+<img src="images/backendpool.png" alt="image" style="width:800px;height:auto;">
 
 ## Health probes
 
 Health Probes are a feature in the management of load balanced environments, serving as mechanisms to ensure high availability and reliability of applications by continuously monitoring the health of backend servers. These probes are automated tests sent at regular intervals to the backend servers to check their status and responsiveness.
 
-<img src="health-probes.png" alt="image" style="width:800px;height:auto;">
+<img src="images/health-probes.png" alt="image" style="width:800px;height:auto;">
 
 ## Load balancing rule
 
 A Load Balancing Rule is a key component in the configuration of load balancers, determining how incoming traffic is distributed across multiple backend servers. These rules specify, based on certain criteria such as port and protocol specifications, how incoming traffic is mapped to target resources.
 Load Balancing Rules can include advanced settings like health probes, which ensure traffic is only forwarded to healthy, available servers, session persistence settings that allow for the session-based allocation of client requests to specific servers, and connection timeout configurations.
 
- <img src="loadbalancing-rule.png" alt="image" style="width:800px;height:auto;">
+ <img src="images/loadbalancing-rule.png" alt="image" style="width:800px;height:auto;">
+
+## Testing
+
+- grap the public ip from the load balancer
+- open the ip in a browser (in privacy mode) multiple time
+- shutdown a vm to simulate a 'server-crash'
+- open the ip in a browser again (in privacy mode) multiple time
