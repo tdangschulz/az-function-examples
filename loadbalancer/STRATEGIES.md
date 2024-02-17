@@ -20,6 +20,10 @@ https://medium.com/@Ian_carson/load-balancers-and-the-fundamental-algorithms-it-
 
   - Verteilt Anfragen basierend auf dem Hash-Schlüsselwert.
   - Der Schlüssel kann die IP-Adresse oder die URL der Anfrage sein.
+- **IP Hash**
+  - Anfragen werden basierend auf der Hash-Wert der IP-Adresse des Clients auf die Server verteilt.
+  - Gewährleistet, dass Anfragen desselben Benutzers an denselben Server weitergeleitet werden, was eine Session-Persistenz ermöglicht.
+  - Besonders nützlich in Anwendungsfällen, bei denen die Beibehaltung der Benutzersitzung über mehrere Anfragen hinweg wichtig ist.
 
 - **Weighted Round Robin**
   - Jeder Server erhält einen Gewichtungswert.
@@ -39,7 +43,3 @@ https://medium.com/@Ian_carson/load-balancers-and-the-fundamental-algorithms-it-
   - Eine neue Anfrage wird an den Server mit der niedrigsten Antwortzeit gesendet, um die Gesamtantwortzeit zu minimieren.
   - Gut geeignet für Fälle, in denen die Antwortzeit kritisch ist.
 
-- **IP Hash**
-  - Anfragen werden basierend auf der Hash-Wert der IP-Adresse des Clients auf die Server verteilt.
-  - Gewährleistet, dass Anfragen desselben Benutzers an denselben Server weitergeleitet werden, was eine Session-Persistenz ermöglicht.
-  - Besonders nützlich in Anwendungsfällen, bei denen die Beibehaltung der Benutzersitzung über mehrere Anfragen hinweg wichtig ist.
