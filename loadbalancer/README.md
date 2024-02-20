@@ -1,8 +1,8 @@
 ## Target picture
 
-![alt text](images/loadbalancer-target-pic.jpg "Title")
+![alt text](images/loadbalancer.drawio.png "Title")
 
-## Create the backends via script (Iac)
+## Create the vm's via script (Iac)
 
 - start the azure cloud shell
 - execute `touch create-env.sh` in the shell

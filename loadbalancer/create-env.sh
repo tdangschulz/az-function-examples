@@ -73,6 +73,8 @@ done
 for NUM in 1 2 3
 do
   az vm open-port -g $resource_group --name $vm_name-0$NUM --port 80
+  az vm open-port -g $resource_group --name $vm_name-0$NUM --port 22
+
 done
 
 for NUM in 1 2 3
