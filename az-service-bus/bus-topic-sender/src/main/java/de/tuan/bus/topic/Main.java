@@ -14,7 +14,7 @@ public class Main {
 
         try {
             var sender = new ServiceBusClientBuilder().connectionString(
-                    "xx")
+                    "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=policy;SharedAccessKey=mHOZime/GYoVbMUqWT4RFsfaQYoRqsIUc+ASbJ1IW8g=;EntityPath=myfirsttopic")
                     .sender().topicName("myfirsttopic")
                     .buildClient();
 

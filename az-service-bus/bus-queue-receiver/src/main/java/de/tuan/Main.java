@@ -18,6 +18,7 @@ public class Main {
 
         Consumer<ServiceBusReceivedMessageContext> processMessage = context -> {
             final ServiceBusReceivedMessage message = context.getMessage();
+            context.deadLetter();
             System.out.printf("Processing message. Session: %s, Sequence #: %s. Contents: %s%n",
                     message.getSessionId(), message.getSequenceNumber(), message.getBody());
         };
@@ -34,10 +35,10 @@ public class Main {
         };
 
         var receiver = new ServiceBusClientBuilder().connectionString(
-                "x")
+                "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=tuan-test;SharedAccessKey=OmPfI99qZIMKMhNzhOqwovCZok0PAW20N+ASbIg351w=;EntityPath=test-queue")
                 .processor()
                 .queueName("test-queue")
-                .receiveMode(ServiceBusReceiveMode.RECEIVE_AND_DELETE)
+                .receiveMode(ServiceBusReceiveMode.PEEK_LOCK)
                 .processMessage(processMessage)
                 .processError(processError)
                 .buildProcessorClient();

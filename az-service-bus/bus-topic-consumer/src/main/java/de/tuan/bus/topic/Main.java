@@ -10,7 +10,7 @@ import com.azure.messaging.servicebus.ServiceBusReceivedMessageContext;
  * https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/servicebus/azure-messaging-servicebus/README.md#send-messages
  */
 public class Main {
-    private static final String CONNECTION_STRING = "xx";
+    private static final String CONNECTION_STRING = "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=policy;SharedAccessKey=mHOZime/GYoVbMUqWT4RFsfaQYoRqsIUc+ASbJ1IW8g=;EntityPath=myfirsttopic";
     private static final String TOPIC_NAME = "myfirsttopic";
     private static final String SUBSCRIPTION_NAME = "mein-test-subscription";
 
@@ -18,8 +18,8 @@ public class Main {
         ServiceBusProcessorClient processorClient = new ServiceBusClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .processor()
-                .topicName(TOPIC_NAME)
                 .subscriptionName(SUBSCRIPTION_NAME)
+                .topicName(TOPIC_NAME)
                 .processMessage(Main::processMessage)
                 .processError(context -> processError(context))
                 .buildProcessorClient();

@@ -15,7 +15,7 @@ public class Main {
         // 'fullyQualifiedNamespace' will look similar to
         // "{your-namespace}.servicebus.windows.net"
         var sender = new ServiceBusClientBuilder().connectionString(
-                "Endpoint=sb://tuan-the-busdriver.servicebus.windows.net/;SharedAccessKeyName=test-cred;SharedAccessKey=IANAPUtVyjpR2ceh4IYA7B6G9yudZM8D0+ASbOqHMeE=;EntityPath=test-queue")
+                "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=tuan-test;SharedAccessKey=OmPfI99qZIMKMhNzhOqwovCZok0PAW20N+ASbIg351w=;EntityPath=test-queue")
                 .sender().queueName("test-queue")
                 .buildClient();
 
