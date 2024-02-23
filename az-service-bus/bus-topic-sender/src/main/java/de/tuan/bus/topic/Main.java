@@ -13,8 +13,11 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            var sender = new ServiceBusClientBuilder().connectionString(
-                    "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=policy;SharedAccessKey=mHOZime/GYoVbMUqWT4RFsfaQYoRqsIUc+ASbJ1IW8g=;EntityPath=myfirsttopic")
+            var sender = new ServiceBusClientBuilder()
+                    // .proxyOptions(new ProxyOptions(ProxyAuthenticationType.NONE,
+                    // new Proxy(Type.HTTP, new InetSocketAddress("127.0.0.1", 9000)), null, null))
+                    .connectionString(
+                            "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=policy;SharedAccessKey=mHOZime/GYoVbMUqWT4RFsfaQYoRqsIUc+ASbJ1IW8g=;EntityPath=myfirsttopic")
                     .sender().topicName("myfirsttopic")
                     .buildClient();
 

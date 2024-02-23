@@ -17,6 +17,8 @@ public class Main {
     public static void main(String[] args) {
         ServiceBusProcessorClient processorClient = new ServiceBusClientBuilder()
                 .connectionString(CONNECTION_STRING)
+                // .proxyOptions(new ProxyOptions(ProxyAuthenticationType.NONE,
+                // new Proxy(Type.HTTP, new InetSocketAddress("127.0.0.1", 9000)), null, null))
                 .processor()
                 .subscriptionName(SUBSCRIPTION_NAME)
                 .topicName(TOPIC_NAME)

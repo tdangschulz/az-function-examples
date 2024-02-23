@@ -17,6 +17,8 @@ public class Main {
         var sender = new ServiceBusClientBuilder().connectionString(
                 "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=tuan-test;SharedAccessKey=OmPfI99qZIMKMhNzhOqwovCZok0PAW20N+ASbIg351w=;EntityPath=test-queue")
                 .sender().queueName("test-queue")
+                // .proxyOptions(new ProxyOptions(ProxyAuthenticationType.NONE,
+                // new Proxy(Type.HTTP, new InetSocketAddress("127.0.0.1", 9000)), null, null))
                 .buildClient();
 
         List<ServiceBusMessage> messages = Arrays.asList(
