@@ -35,7 +35,7 @@ public class Main {
         };
 
         var receiver = new ServiceBusClientBuilder().connectionString(
-                "Endpoint=sb://bus-tuan-test.servicebus.windows.net/;SharedAccessKeyName=tuan-test;SharedAccessKey=OmPfI99qZIMKMhNzhOqwovCZok0PAW20N+ASbIg351w=;EntityPath=test-queue")
+                "xxx")
                 .processor()
                 .transportType(AmqpTransportType.AMQP_WEB_SOCKETS)
                 // .proxyOptions(new ProxyOptions(ProxyAuthenticationType.NONE,
