@@ -5,6 +5,11 @@ const tableOutput = output.table({
   connection: "AzureWebJobsStorage",
 });
 
+const queueOutput = output.storageQueue({
+  queueName: "notifyQueue",
+  connection: "AzureWebJobsStorage",
+});
+
 app.storageQueue("accept-order", {
   queueName: "order-accepted-queue",
   connection: "AzureWebJobsStorage",
@@ -16,6 +21,9 @@ app.storageQueue("accept-order", {
       ...queueItem,
     };
     context.extraOutputs.set(tableOutput, [item]);
+
+    context.extraOutputs.set(queueOutput, JSON.stringify(queueItem));
+
     context.log(queueItem);
   },
 });

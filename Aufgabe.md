@@ -23,7 +23,9 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 - Erstellen Sie zwei VMs (Ubuntu 20 LTS) innerhalb des VNets im erstellten Subnetz.
 - Damit die VM zugriff auf das Internet hat, muss in Loadbalancer ein outbound rule erstellt werden
-  <img src="./outbound.png" alt="image" style="width:600px;height:auto;">
+
+<img src="./outbound.png" alt="image" style="width:600px;height:auto;">
+
 - **Java-Installation:** Installieren Sie Java auf beiden VMs, da dies für die Ausführung der Spring-Anwendung erforderlich ist. Siehe https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/
 - **Anwendungsbereitstellung:** Kopieren Sie die ausführbare `.jar`-Datei der Spring-Anwendung mithilfe von `scp` (Secure Copy) auf jede VM. Verwenden Sie `ssh` (Secure Shell), um sich bei den VMs anzumelden und die Anwendung zu starten. Weitere informationen https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/
 
@@ -37,34 +39,36 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 <img src="./loadbalancer-vm-inbound-rule.png" alt="image" style="width:800px;height:auto;">
 
-4. **Azure Storage Account Table:**
+4.  **Azure Storage Account Table:**
 
-   - Erstellen Sie einen Azure Storage Account und innerhalb dessen eine Table, um die Bestelldaten zu speichern.
+    - Erstellen Sie einen Azure Storage Account und innerhalb dessen eine Table, um die Bestelldaten zu speichern.
 
-     https://learn.microsoft.com/de-de/azure/cosmos-db/table/how-to-use-java#add-an-entity-to-a-table
+           https://learn.microsoft.com/de-de/azure/cosmos-db/table/how-to-use-java#add-an-entity-to-a-table
 
-     ```json
-     {
-      "name": string,
-      "email": string
-      "state": accepted, in_processing, in_delivery, canceled,
-      "orderNo": string
-     }
-     ```
+           ```json
+           {
+            "name": string,
+            "email": string
+            "state": accepted, in_processing, in_delivery, canceled,
+            "orderNo": string
+           }
+           ```
 
-5. **Azure Function für E-Mail-Benachrichtigungen:**
+> **📝** Um JSON in die storage queue gerschrieben werden kann, sollte der JSON String Base64 encodiert sein. `String encodedString = Base64.getEncoder().encodeToString(json.getBytes());`
 
-   - Implementieren Sie eine Azure Function, die getriggert wird, sobald eine neue Bestellung in der Table gespeichert wird. Diese Funktion soll dann eine E-Mail an den Benutzer senden. Das versenden einer Email kann erstmal per consolen Ausgabe simmuliert werden und muss keine echte Email versendet werden.
+5.  **Azure Function für E-Mail-Benachrichtigungen:**
 
-6. **Azure Service Bus und Topics für stornierte Bestellungen:**
+    - Implementieren Sie eine Azure Function, die getriggert wird, sobald eine neue Bestellung in der Table gespeichert wird. Diese Funktion soll dann eine E-Mail an den Benutzer senden. Das versenden einer Email kann erstmal per consolen Ausgabe simmuliert werden und muss keine echte Email versendet werden.
 
-   - Erstellen Sie ein Topic im Azure Service Bus, in das eine Nachricht geschrieben wird, wenn eine Bestellung über die Spring-Anwendung storniert wird. (Tipp nutzen sie dafür die Filter Funktion)
-   - Richten Sie drei Subscribers für das Topic ein:
-     1. Ein Subscriber sendet eine Bestätigungsemail an den Benutzer.
-     2. Ein Subscriber ändert den Zustand der Bestellung in der Azure Storage Account Table.
-     3. Ein Subscriber schreibt den Zeitpunkt und Grund der Stornierung in eine separate Tabelle für spätere Auswertungen.
+6.  **Azure Service Bus und Topics für stornierte Bestellungen:**
 
-   https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/servicebus/azure-messaging-servicebus/README.md
+    - Erstellen Sie ein Topic im Azure Service Bus, in das eine Nachricht geschrieben wird, wenn eine Bestellung über die Spring-Anwendung storniert wird. (Tipp nutzen sie dafür die Filter Funktion)
+    - Richten Sie drei Subscribers für das Topic ein:
+      1. Ein Subscriber sendet eine Bestätigungsemail an den Benutzer.
+      2. Ein Subscriber ändert den Zustand der Bestellung in der Azure Storage Account Table.
+      3. Ein Subscriber schreibt den Zeitpunkt und Grund der Stornierung in eine separate Tabelle für spätere Auswertungen.
+
+    https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/servicebus/azure-messaging-servicebus/README.md
 
 ## Hinweise
 

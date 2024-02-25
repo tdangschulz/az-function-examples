@@ -102,26 +102,26 @@ az network lb address-pool create \
   --vnet $vnet_name \
 
 
-az network nic ip-config create \
-  --resource-group $resource_group \
-  --nic-name vm-lb-we-tds-01VMNic \
-  --name ipconfig1 \
-  --lb-name $loadbalance_name \
-  --vnet-name vnet_name
+# az network nic ip-config create \
+#   --resource-group $resource_group \
+#   --nic-name vm-lb-we-tds-01VMNic \
+#   --name ipconfig1 \
+#   --lb-name $loadbalance_name \
+#   --vnet-name vnet_name
 
-az network nic ip-config create \
-  --resource-group $resource_group \
-  --nic-name vm-lb-we-tds-02VMNic \
-  --name ipconfig2 \
-  --lb-name $loadbalance_name \
-  --vnet-name vnet_name
+# az network nic ip-config create \
+#   --resource-group $resource_group \
+#   --nic-name vm-lb-we-tds-02VMNic \
+#   --name ipconfig2 \
+#   --lb-name $loadbalance_name \
+#   --vnet-name vnet_name
 
-az network nic ip-config create \
-  --resource-group $resource_group \
-  --nic-name vm-lb-we-tds-03VMNic \
-  --name ipconfig3 \
-  --lb-name $loadbalance_name \
-  --vnet-name vnet_name    
+# az network nic ip-config create \
+#   --resource-group $resource_group \
+#   --nic-name vm-lb-we-tds-03VMNic \
+#   --name ipconfig3 \
+#   --lb-name $loadbalance_name \
+#   --vnet-name vnet_name    
 
 az network lb probe create --lb-name $loadbalance_name  \
                            --name ssh-probe \
