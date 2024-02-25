@@ -14,8 +14,8 @@ public class AzureClientFactory {
 
     private final static String queueName = "order-accepted-queue";
 
-    private String queueEndpoint = "DefaultEndpointsProtocol=https;AccountName=orderstoragetds;AccountKey=A8CdTtcYk1e0GKR+70IAFXGfTiaUhe5o+YztGPc/GrhdyGuuKMHCZ1lzB5eFDWAAF01HWLowwjhH+ASt67Iu7A==;EndpointSuffix=core.windows.net";
-    private final static String topicEndpoint = "Endpoint=sb://bus-order-weu-tds.servicebus.windows.net/;SharedAccessKeyName=spring-app;SharedAccessKey=1VXl63bxAzO43Wl21ZYf4v5hSmxmajVfd+ASbP0+8oI=;EntityPath=cancelorder";
+    private String queueEndpoint = "xxx";
+    private final static String topicEndpoint = "xxx";
 
     @Bean
     public QueueClient createQueueClient() {
