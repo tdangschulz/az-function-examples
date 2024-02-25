@@ -19,14 +19,23 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 3. **Virtuelle Maschinen:**
 
-   - Erstellen Sie zwei VMs (Ubuntu 20 LTS) innerhalb des VNets im erstellten Subnetz.
-   - Damit die VM zugriff auf das Internet hat, muss in Loadbalancer ein outbound rule erstellt werden
-     <img src="./outbound.png" alt="image" style="width:600px;height:auto;">
-   - **Java-Installation:** Installieren Sie Java auf beiden VMs, da dies für die Ausführung der Spring-Anwendung erforderlich ist. Siehe https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/
-   - **Anwendungsbereitstellung:** Kopieren Sie die ausführbare `.jar`-Datei der Spring-Anwendung mithilfe von `scp` (Secure Copy) auf jede VM. Verwenden Sie `ssh` (Secure Shell), um sich bei den VMs anzumelden und die Anwendung zu starten. ggf. funktioniert ssh/scp nicht aus dem internen Netz, dann über den Mobilen Hotspot versuchen. Weitere informationen https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/
-   - Konfigurieren Sie eine Spring-Anwendung auf beiden VMs, die folgende Endpunkte bereitstellt:
-     - `POST /order` - Nimmt eine neue Bestellung entgegen.
-     - `PUT /order/{id}` - Ändert den Zustand einer Bestellung (`akzeptiert`, `in Verarbeitung`, `in Auslieferung`, `storniert`).
+> **📝** ggf. funktioniert ssh/scp nicht aus dem internen Netz, dann über den Mobilen Hotspot versuchen.
+
+- Erstellen Sie zwei VMs (Ubuntu 20 LTS) innerhalb des VNets im erstellten Subnetz.
+- Damit die VM zugriff auf das Internet hat, muss in Loadbalancer ein outbound rule erstellt werden
+  <img src="./outbound.png" alt="image" style="width:600px;height:auto;">
+- **Java-Installation:** Installieren Sie Java auf beiden VMs, da dies für die Ausführung der Spring-Anwendung erforderlich ist. Siehe https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/
+- **Anwendungsbereitstellung:** Kopieren Sie die ausführbare `.jar`-Datei der Spring-Anwendung mithilfe von `scp` (Secure Copy) auf jede VM. Verwenden Sie `ssh` (Secure Shell), um sich bei den VMs anzumelden und die Anwendung zu starten. Weitere informationen https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/
+
+> **📝** Um sicherzustellen, dass eine Spring-Anwendung auf einem Server weiterläuft, auch nachdem die SSH-Verbindung getrennt wurde kann folgende Command genutz werden `nohup java -jar meine-spring-anwendung.jar &`
+
+- Konfigurieren Sie eine Spring-Anwendung auf beiden VMs, die folgende Endpunkte bereitstellt:
+  - `POST /order` - Nimmt eine neue Bestellung entgegen.
+  - `PUT /order/{id}` - Ändert den Zustand einer Bestellung (`akzeptiert`, `in Verarbeitung`, `in Auslieferung`, `storniert`).
+
+> **📝** Damit eine VM Anfragen über den Port 8080 vom Loadbalancer erhalten darf, muss der Service Tag in dem Netzwerk Inbound Regel von der VM erweitert werden.
+
+<img src="./loadbalancer-vm-inbound-rule.png" alt="image" style="width:800px;height:auto;">
 
 4. **Azure Storage Account Table:**
 
