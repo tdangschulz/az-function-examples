@@ -41,18 +41,16 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 4.  **Azure Storage Account Table:**
 
-    - Erstellen Sie einen Azure Storage Account und innerhalb dessen eine Table, um die Bestelldaten zu speichern.
+    - Erstellen Sie einen Azure Storage Account und innerhalb dessen eine Table, um die Bestelldaten zu speichern. see https://learn.microsoft.com/de-de/azure/cosmos-db/table/how-to-use-java#add-an-entity-to-a-table
 
-           https://learn.microsoft.com/de-de/azure/cosmos-db/table/how-to-use-java#add-an-entity-to-a-table
-
-           ```json
-           {
-            "name": string,
-            "email": string
-            "state": accepted, in_processing, in_delivery, canceled,
-            "orderNo": string
-           }
-           ```
+    ```json
+    {
+      "name": string,
+      "email": string
+      "state": accepted, in_processing, in_delivery, canceled,
+      "orderNo": string
+    }
+    ```
 
 > **📝** Um JSON in die storage queue gerschrieben werden kann, sollte der JSON String Base64 encodiert sein. `String encodedString = Base64.getEncoder().encodeToString(json.getBytes());`
 
@@ -62,13 +60,13 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 6.  **Azure Service Bus und Topics für stornierte Bestellungen:**
 
+    https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/servicebus/azure-messaging-servicebus/README.md
+
     - Erstellen Sie ein Topic im Azure Service Bus, in das eine Nachricht geschrieben wird, wenn eine Bestellung über die Spring-Anwendung storniert wird. (Tipp nutzen sie dafür die Filter Funktion)
     - Richten Sie drei Subscribers für das Topic ein:
       1. Ein Subscriber sendet eine Bestätigungsemail an den Benutzer.
       2. Ein Subscriber ändert den Zustand der Bestellung in der Azure Storage Account Table.
       3. Ein Subscriber schreibt den Zeitpunkt und Grund der Stornierung in eine separate Tabelle für spätere Auswertungen.
-
-    https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/servicebus/azure-messaging-servicebus/README.md
 
 ## Hinweise
 
