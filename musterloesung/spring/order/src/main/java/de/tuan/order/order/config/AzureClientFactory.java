@@ -19,6 +19,7 @@ public class AzureClientFactory {
 
     @Bean
     public QueueClient createQueueClient() {
+        
         QueueClient queueClient = new QueueClientBuilder()
 
                 .connectionString(queueEndpoint)

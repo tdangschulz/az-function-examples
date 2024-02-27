@@ -21,7 +21,7 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 > **📝** ggf. funktioniert ssh/scp nicht aus dem internen Netz, dann über den Mobilen Hotspot versuchen.
 
-- Erstellen Sie zwei VMs (Ubuntu 20 LTS) innerhalb des VNets im erstellten Subnetz.
+- Erstellen Sie zwei VMs **(Ubuntu 20 LTS und mindesten B2s)** innerhalb des VNets im erstellten Subnetz.
 - Damit die VM zugriff auf das Internet hat, muss in Loadbalancer ein outbound rule erstellt werden
 
 <img src="./outbound.png" alt="image" style="width:600px;height:auto;">
@@ -29,13 +29,13 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 - **Java-Installation:** Installieren Sie Java auf beiden VMs, da dies für die Ausführung der Spring-Anwendung erforderlich ist. Siehe https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/
 - **Anwendungsbereitstellung:** Kopieren Sie die ausführbare `.jar`-Datei der Spring-Anwendung mithilfe von `scp` (Secure Copy) auf jede VM. Verwenden Sie `ssh` (Secure Shell), um sich bei den VMs anzumelden und die Anwendung zu starten. Weitere informationen https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/
 
-> **📝** Um sicherzustellen, dass eine Spring-Anwendung auf einem Server weiterläuft, auch nachdem die SSH-Verbindung getrennt wurde kann folgende Command genutz werden `nohup java -jar meine-spring-anwendung.jar &`
+> **📝** Um sicherzustellen, dass eine Spring-Anwendung auf einem Server weiterläuft, auch nachdem die SSH-Verbindung getrennt wurde, kann folgende Command genutz werden `nohup java -jar meine-spring-anwendung.jar &`
 
 - Konfigurieren Sie eine Spring-Anwendung auf beiden VMs, die folgende Endpunkte bereitstellt:
   - `POST /order` - Nimmt eine neue Bestellung entgegen.
   - `PUT /order/{id}` - Ändert den Zustand einer Bestellung (`akzeptiert`, `in Verarbeitung`, `in Auslieferung`, `storniert`).
 
-> **📝** Damit eine VM Anfragen über den Port 8080 vom Loadbalancer erhalten darf, muss der Service Tag in dem Netzwerk Inbound Regel von der VM erweitert werden.
+> **📝** Damit eine VM Anfragen über den Port 8080 vom Loadbalancer erhalten darf, muss ggf. der Service Tag in dem Netzwerk Inbound Regel von der VM erweitert werden.
 
 <img src="./loadbalancer-vm-inbound-rule.png" alt="image" style="width:800px;height:auto;">
 
@@ -74,3 +74,12 @@ Erstellen Sie ein virtuelles Netzwerk (VNet) in Azure, das einen LoadBalancer un
 
 - Verwenden Sie für die Entwicklung der Spring-Anwendung geeignete REST-Prinzipien und stellen Sie sicher, dass die Anwendung stateless ist, um eine optimale Skalierbarkeit und Verfügbarkeit im Cloud-Umfeld zu gewährleisten.
 - Überlegen Sie, wie Sie die Idempotenz und Transaktionalität beim Schreiben in den Azure Storage Account und beim Senden von Nachrichten an den Service Bus sicherstellen können.
+
+## Trouble shooting
+
+### Wenn keine Verbindung zur Spring App von Postman oder Browser aufgebaut werden kann
+
+- läuft die Spring Anwendung? kann per `curl localhost:8080` den Anwendung angesprochen werden
+- prüfe den Health probe
+- prüfe die LoadBalancer Inbound Rule
+- Prüfe in den Network Setting von der VM ob der Port 8080 freigegeben wurde

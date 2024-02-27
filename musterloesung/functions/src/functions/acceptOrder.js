@@ -14,6 +14,7 @@ app.storageQueue("accept-order", {
   queueName: "order-accepted-queue",
   connection: "AzureWebJobsStorage",
   extraOutputs: [tableOutput],
+  return: queueOutput,
   handler: (queueItem, context) => {
     const item = {
       partitionKey: "order",
@@ -22,9 +23,11 @@ app.storageQueue("accept-order", {
     };
     context.extraOutputs.set(tableOutput, [item]);
 
-    context.extraOutputs.set(queueOutput, JSON.stringify(queueItem));
+    //context.extraOutputs.set(queueOutput, JSON.stringify(queueItem));
 
     context.log(queueItem);
+
+    return queueItem;
   },
 });
 

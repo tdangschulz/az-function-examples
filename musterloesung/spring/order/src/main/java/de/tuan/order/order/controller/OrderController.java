@@ -1,6 +1,7 @@
 package de.tuan.order.order.controller;
 
 import java.util.Base64;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,7 +50,8 @@ public class OrderController {
     public void cancelOrder(@PathVariable String orderNr) {
 
         var message = new ServiceBusMessage(orderNr);
-        message.getApplicationProperties().put("state", "cancel");
+        message.getApplicationProperties().put("isPremium", "true");
+        message.getApplicationProperties().put("ts", new Date());
 
         this.serviceBusSenderClient.sendMessage(message);
     }
